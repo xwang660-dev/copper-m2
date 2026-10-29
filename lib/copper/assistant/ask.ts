@@ -116,7 +116,10 @@ export async function askCopper(
         progress.reply = "Sorry, I couldn't come up with an answer. Please try again.";
       }
       progress.status = "done";
-    } catch {
+    } catch (error) {
+      // The shopper sees a short apology; the real reason goes to the server
+      // log (the terminal, or Vercel's runtime logs).
+      console.error("[ask-copper]", error);
       progress.status = "error";
       if (!progress.reply.trim()) {
         progress.reply = "Sorry, something went wrong. Please try again.";
